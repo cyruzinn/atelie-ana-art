@@ -75,7 +75,6 @@ function ArtworkPage() {
   const { data: art } = useSuspenseQuery(artworkQuery(Route.useParams().id));
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const createPref = useServerFn(createCheckoutPreference);
 
   if (!art) return <NotFound />;
@@ -97,7 +96,7 @@ function ArtworkPage() {
         toast.message("Modo de teste: Mercado Pago não configurado.", {
           description: "Simulando redirecionamento para a página de retorno.",
         });
-        navigate({ to: res.init_point as any });
+        window.location.href = res.init_point;
       } else {
         window.location.href = res.init_point;
       }
