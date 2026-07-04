@@ -1,24 +1,102 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { createServerFn } from "@tanstack/react-start";
+import { createClient } from "@supabase/supabase-js";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
+import { Header, Footer } from "@/components/Header";
+import { ArtworkCard, type Artwork } from "@/components/ArtworkCard";
+
+export const listArtworks = createServerFn({ method: "GET" }).handler(async () => {
+  const supabase = createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_PUBLISHABLE_KEY!,
+    { auth: { persistSession: false, autoRefreshToken: false, storage: undefined } },
+  );
+  const { data, error } = await supabase
+    .from("artworks")
+    .select("id,title,technique,year,width_cm,height_cm,price_brl,preview_url,published")
+    .eq("published", true)
+    .order("created_at", { ascending: false });
+  if (error) throw new Error(error.message);
+  return (data ?? []) as Artwork[];
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+const artworksQuery = queryOptions({
+  queryKey: ["artworks"],
+  queryFn: () => listArtworks(),
+});
+
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Ateliê da Ana · Galeria de obras originais" },
+      {
+        name: "description",
+        content:
+          "Galeria de obras originais da artista e arquiteta Ana. Traço técnico e aquarelas orgânicas.",
+      },
+    ],
+  }),
+  loader: ({ context }) => context.queryClient.ensureQueryData(artworksQuery),
+  component: Home,
+  errorComponent: ({ error }) => (
+    <div className="p-8 text-center text-technical">Falha ao carregar obras: {error.message}</div>
+  ),
+});
+
+function Home() {
+  const { data: artworks } = useSuspenseQuery(artworksQuery);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen">
+      <Header />
+      <main className="relative">
+        {/* Blueprint background */}
+        <div className="blueprint-grid-fine absolute inset-0 -z-10 opacity-60" aria-hidden />
+
+        <section className="mx-auto max-w-6xl px-6 pt-16 pb-12">
+          <p className="text-technical">Ateliê · Est. 2024 · São Paulo</p>
+          <h1 className="mt-4 font-serif text-5xl leading-[1.05] text-foreground md:text-6xl">
+            Obras originais entre o traço<br />
+            arquitetônico e a aquarela.
+          </h1>
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/80">
+            Ana é arquiteta e artista. No ateliê, o rigor do desenho técnico
+            encontra a liberdade da aquarela — cada obra é única, assinada, e
+            entregue com certificado de autoria. Aqui você encontra a coleção
+            atual, disponível para compra e download em alta resolução.
+          </p>
+          <div className="mt-8 flex items-center gap-4 text-technical">
+            <span className="inline-block h-px w-12 bg-technical" />
+            <span>Escala 1:1 · Edições únicas</span>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-6xl px-6 pb-24">
+          <div className="mb-8 flex items-baseline justify-between border-b border-border pb-3">
+            <h2 className="font-serif text-2xl text-foreground">Coleção atual</h2>
+            <span className="text-technical">
+              {String(artworks.length).padStart(2, "0")} obras · atualizado hoje
+            </span>
+          </div>
+
+          {artworks.length === 0 ? (
+            <div className="border border-dashed border-border p-16 text-center">
+              <p className="text-technical">Nenhuma obra publicada no momento.</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Acesse o Ateliê para cadastrar novas obras.
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+              {artworks.map((a) => (
+                <ArtworkCard key={a.id} artwork={a} />
+              ))}
+            </div>
+          )}
+        </section>
+      </main>
+      <Footer />
     </div>
   );
 }

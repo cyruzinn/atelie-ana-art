@@ -9,38 +9,140 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ObraIdRouteImport } from './routes/obra.$id'
+import { Route as DownloadTokenRouteImport } from './routes/download.$token'
+import { Route as CheckoutSucessoRouteImport } from './routes/checkout.sucesso'
+import { Route as CheckoutPendenteRouteImport } from './routes/checkout.pendente'
+import { Route as CheckoutFalhaRouteImport } from './routes/checkout.falha'
+import { Route as ApiPublicMpWebhookRouteImport } from './routes/api/public/mp-webhook'
 
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ObraIdRoute = ObraIdRouteImport.update({
+  id: '/obra/$id',
+  path: '/obra/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DownloadTokenRoute = DownloadTokenRouteImport.update({
+  id: '/download/$token',
+  path: '/download/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutSucessoRoute = CheckoutSucessoRouteImport.update({
+  id: '/checkout/sucesso',
+  path: '/checkout/sucesso',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutPendenteRoute = CheckoutPendenteRouteImport.update({
+  id: '/checkout/pendente',
+  path: '/checkout/pendente',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutFalhaRoute = CheckoutFalhaRouteImport.update({
+  id: '/checkout/falha',
+  path: '/checkout/falha',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicMpWebhookRoute = ApiPublicMpWebhookRouteImport.update({
+  id: '/api/public/mp-webhook',
+  path: '/api/public/mp-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/checkout/falha': typeof CheckoutFalhaRoute
+  '/checkout/pendente': typeof CheckoutPendenteRoute
+  '/checkout/sucesso': typeof CheckoutSucessoRoute
+  '/download/$token': typeof DownloadTokenRoute
+  '/obra/$id': typeof ObraIdRoute
+  '/api/public/mp-webhook': typeof ApiPublicMpWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/checkout/falha': typeof CheckoutFalhaRoute
+  '/checkout/pendente': typeof CheckoutPendenteRoute
+  '/checkout/sucesso': typeof CheckoutSucessoRoute
+  '/download/$token': typeof DownloadTokenRoute
+  '/obra/$id': typeof ObraIdRoute
+  '/api/public/mp-webhook': typeof ApiPublicMpWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/checkout/falha': typeof CheckoutFalhaRoute
+  '/checkout/pendente': typeof CheckoutPendenteRoute
+  '/checkout/sucesso': typeof CheckoutSucessoRoute
+  '/download/$token': typeof DownloadTokenRoute
+  '/obra/$id': typeof ObraIdRoute
+  '/api/public/mp-webhook': typeof ApiPublicMpWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/checkout/falha'
+    | '/checkout/pendente'
+    | '/checkout/sucesso'
+    | '/download/$token'
+    | '/obra/$id'
+    | '/api/public/mp-webhook'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin'
+    | '/checkout/falha'
+    | '/checkout/pendente'
+    | '/checkout/sucesso'
+    | '/download/$token'
+    | '/obra/$id'
+    | '/api/public/mp-webhook'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/checkout/falha'
+    | '/checkout/pendente'
+    | '/checkout/sucesso'
+    | '/download/$token'
+    | '/obra/$id'
+    | '/api/public/mp-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  CheckoutFalhaRoute: typeof CheckoutFalhaRoute
+  CheckoutPendenteRoute: typeof CheckoutPendenteRoute
+  CheckoutSucessoRoute: typeof CheckoutSucessoRoute
+  DownloadTokenRoute: typeof DownloadTokenRoute
+  ObraIdRoute: typeof ObraIdRoute
+  ApiPublicMpWebhookRoute: typeof ApiPublicMpWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +150,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/obra/$id': {
+      id: '/obra/$id'
+      path: '/obra/$id'
+      fullPath: '/obra/$id'
+      preLoaderRoute: typeof ObraIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/download/$token': {
+      id: '/download/$token'
+      path: '/download/$token'
+      fullPath: '/download/$token'
+      preLoaderRoute: typeof DownloadTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/sucesso': {
+      id: '/checkout/sucesso'
+      path: '/checkout/sucesso'
+      fullPath: '/checkout/sucesso'
+      preLoaderRoute: typeof CheckoutSucessoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/pendente': {
+      id: '/checkout/pendente'
+      path: '/checkout/pendente'
+      fullPath: '/checkout/pendente'
+      preLoaderRoute: typeof CheckoutPendenteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout/falha': {
+      id: '/checkout/falha'
+      path: '/checkout/falha'
+      fullPath: '/checkout/falha'
+      preLoaderRoute: typeof CheckoutFalhaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/mp-webhook': {
+      id: '/api/public/mp-webhook'
+      path: '/api/public/mp-webhook'
+      fullPath: '/api/public/mp-webhook'
+      preLoaderRoute: typeof ApiPublicMpWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  CheckoutFalhaRoute: CheckoutFalhaRoute,
+  CheckoutPendenteRoute: CheckoutPendenteRoute,
+  CheckoutSucessoRoute: CheckoutSucessoRoute,
+  DownloadTokenRoute: DownloadTokenRoute,
+  ObraIdRoute: ObraIdRoute,
+  ApiPublicMpWebhookRoute: ApiPublicMpWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
