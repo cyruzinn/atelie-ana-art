@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ObraIdRouteImport } from './routes/obra.$id'
+import { Route as ApiPublicMpWebhookRouteImport } from './routes/api/public/mp-webhook'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ObraIdRoute = ObraIdRouteImport.update({
+  id: '/obra/$id',
+  path: '/obra/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicMpWebhookRoute = ApiPublicMpWebhookRouteImport.update({
+  id: '/api/public/mp-webhook',
+  path: '/api/public/mp-webhook',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/obra/$id': typeof ObraIdRoute
+  '/api/public/mp-webhook': typeof ApiPublicMpWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/obra/$id': typeof ObraIdRoute
+  '/api/public/mp-webhook': typeof ApiPublicMpWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/obra/$id': typeof ObraIdRoute
+  '/api/public/mp-webhook': typeof ApiPublicMpWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/obra/$id' | '/api/public/mp-webhook'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/obra/$id' | '/api/public/mp-webhook'
+  id: '__root__' | '/' | '/obra/$id' | '/api/public/mp-webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ObraIdRoute: typeof ObraIdRoute
+  ApiPublicMpWebhookRoute: typeof ApiPublicMpWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/obra/$id': {
+      id: '/obra/$id'
+      path: '/obra/$id'
+      fullPath: '/obra/$id'
+      preLoaderRoute: typeof ObraIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/mp-webhook': {
+      id: '/api/public/mp-webhook'
+      path: '/api/public/mp-webhook'
+      fullPath: '/api/public/mp-webhook'
+      preLoaderRoute: typeof ApiPublicMpWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ObraIdRoute: ObraIdRoute,
+  ApiPublicMpWebhookRoute: ApiPublicMpWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
