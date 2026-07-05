@@ -283,6 +283,10 @@ function AdminPanel({ email }: { email: string }) {
             onChange={(v) => setForm({ ...form, preview_url: v })}
             placeholder="https://… (imagem com marca d'água)"
           />
+          <WatermarkUploader
+            onUploaded={(url) => setForm((f) => ({ ...f, preview_url: url }))}
+          />
+
           <TextField
             label="Caminho do original no storage (bucket 'originals')"
             value={form.original_path}
