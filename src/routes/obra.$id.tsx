@@ -118,19 +118,15 @@ function ArtworkPage() {
           {/* Imagem */}
           <div>
             <BlueprintFrame label={`FICHA · ${art.id.slice(0, 6).toUpperCase()}`}>
-              <div
-                className="protected-image-wrapper watermark relative aspect-[4/5] overflow-hidden bg-white"
-                onContextMenu={(e) => e.preventDefault()}
-              >
-                <img
-                  src={art.preview_url}
-                  alt={art.title}
-                  width={1200}
-                  height={1500}
-                  className="protected-image h-full w-full object-contain"
-                  draggable={false}
-                />
-              </div>
+              <ProtectedImage
+                wrapperClassName="aspect-[4/5]"
+                src={art.preview_url}
+                alt={art.title}
+                width={1200}
+                height={1500}
+                className="object-contain"
+              />
+
             </BlueprintFrame>
             <p className="mt-3 text-technical">
               Preview em baixa resolução com marca d'água — o arquivo original é liberado após o pagamento.
