@@ -85,8 +85,11 @@
   h1, h2, h3, h4 {
     font-family: var(--font-serif);
     font-weight: 400;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    font-optical-sizing: auto;
+    font-variation-settings: "opsz" 96, "SOFT" 50;
   }
+  h1 { font-variation-settings: "opsz" 144, "SOFT" 60; }
 }
 
 /* Blueprint grid — subtle drafting-paper background */
