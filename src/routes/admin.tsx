@@ -13,6 +13,8 @@ import {
   adminClaimIfEmpty,
 } from "@/lib/admin.functions";
 import { formatBRL } from "@/lib/format";
+import { generateWatermarkedPreview } from "@/lib/watermark";
+
 
 export const Route = createFileRoute("/admin")({
   head: () => ({ meta: [{ title: "Ateliê · Admin" }, { name: "robots", content: "noindex" }] }),
@@ -281,6 +283,10 @@ function AdminPanel({ email }: { email: string }) {
             onChange={(v) => setForm({ ...form, preview_url: v })}
             placeholder="https://… (imagem com marca d'água)"
           />
+          <WatermarkUploader
+            onUploaded={(url) => setForm((f) => ({ ...f, preview_url: url }))}
+          />
+
           <TextField
             label="Caminho do original no storage (bucket 'originals')"
             value={form.original_path}
@@ -408,3 +414,60 @@ function NumberField({ label, value, onChange, step = 0.5 }: { label: string; va
     </label>
   );
 }
+
+function WatermarkUploader({ onUploaded }: { onUploaded: (url: string) => void }) {
+  const [busy, setBusy] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  async function onFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      toast.error("Selecione um arquivo de imagem.");
+      return;
+    }
+    setBusy(true);
+    try {
+      const blob = await generateWatermarkedPreview(file);
+      const ext = "jpg";
+      const path = `wm/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+      const { error: upErr } = await supabase.storage
+        .from("previews")
+        .upload(path, blob, { contentType: "image/jpeg", upsert: false });
+      if (upErr) throw upErr;
+      const { data: pub } = supabase.storage.from("previews").getPublicUrl(path);
+      if (!pub?.publicUrl) throw new Error("Não foi possível obter a URL pública.");
+      setPreviewUrl(pub.publicUrl);
+      onUploaded(pub.publicUrl);
+      toast.success("Preview com marca d'água gerado e enviado.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Erro ao gerar preview.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="border border-dashed border-border p-3">
+      <p className="text-technical">Gerar preview com marca d'água</p>
+      <p className="mt-1 text-xs text-foreground/70">
+        Selecione o arquivo original — o preview reduzido com marca d'água
+        diagonal é gerado no seu navegador e enviado ao bucket público{" "}
+        <span className="font-mono">previews</span>. O original NÃO sai daqui.
+      </p>
+      <input
+        type="file"
+        accept="image/*"
+        disabled={busy}
+        onChange={onFile}
+        className="mt-3 block w-full text-xs file:mr-3 file:border file:border-border file:bg-background file:px-3 file:py-1.5 file:text-technical hover:file:border-foreground"
+      />
+      {busy && <p className="mt-2 text-technical">Processando…</p>}
+      {previewUrl && (
+        <p className="mt-2 break-all font-mono text-xs text-primary">{previewUrl}</p>
+      )}
+    </div>
+  );
+}
+

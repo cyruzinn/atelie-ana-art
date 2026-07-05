@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { formatBRL, formatDim } from "@/lib/format";
+import { ProtectedImage } from "@/components/ProtectedImage";
+
 
 export interface Artwork {
   id: string;
@@ -30,20 +32,16 @@ export function ArtworkCard({ artwork }: { artwork: Artwork }) {
 
         <div className="relative">
           {/* wrapper protection */}
-          <div
-            className="protected-image-wrapper relative aspect-[4/5] overflow-hidden border border-border bg-white watermark"
-            onContextMenu={(e) => e.preventDefault()}
-          >
-            <img
-              src={artwork.preview_url}
-              alt={artwork.title}
-              loading="lazy"
-              width={800}
-              height={1000}
-              className="protected-image h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              draggable={false}
-            />
-          </div>
+          <ProtectedImage
+            wrapperClassName="aspect-[4/5] border border-border"
+            src={artwork.preview_url}
+            alt={artwork.title}
+            loading="lazy"
+            width={800}
+            height={1000}
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+
 
           {/* Cota vertical (altura) — lado direito */}
           <div className="pointer-events-none absolute -right-6 top-0 hidden h-full flex-col items-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 md:flex">

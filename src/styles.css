@@ -121,13 +121,25 @@
 /* Protected image — disable selection/dragging */
 .protected-image {
   user-select: none;
+  -webkit-user-select: none;
   -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   pointer-events: none;
+  -webkit-touch-callout: none;
 }
 .protected-image-wrapper {
   user-select: none;
+  -webkit-user-select: none;
   -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }
+.protected-image-wrapper img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
 
 /* Watermark overlay for previews */
 .watermark::after {
