@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { formatBRL, formatDim } from "@/lib/format";
+import { ProtectedImage } from "@/components/ProtectedImage";
+
 
 export interface Artwork {
   id: string;
