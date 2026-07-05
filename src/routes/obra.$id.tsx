@@ -8,6 +8,8 @@ import { toast } from "sonner";
 
 import { Header, Footer } from "@/components/Header";
 import { BlueprintFrame } from "@/components/BlueprintFrame";
+import { ProtectedImage } from "@/components/ProtectedImage";
+
 import { formatBRL, formatDim } from "@/lib/format";
 import { createCheckoutPreference } from "@/lib/mp.functions";
 
