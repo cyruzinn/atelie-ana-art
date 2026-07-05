@@ -13,6 +13,8 @@ import {
   adminClaimIfEmpty,
 } from "@/lib/admin.functions";
 import { formatBRL } from "@/lib/format";
+import { generateWatermarkedPreview } from "@/lib/watermark";
+
 
 export const Route = createFileRoute("/admin")({
   head: () => ({ meta: [{ title: "Ateliê · Admin" }, { name: "robots", content: "noindex" }] }),
