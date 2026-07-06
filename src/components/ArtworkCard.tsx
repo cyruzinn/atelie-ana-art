@@ -25,29 +25,30 @@ export function ArtworkCard({ artwork }: { artwork: Artwork }) {
     >
       <article className="relative">
         {/* Cotas (dimensões técnicas) — aparecem no hover */}
-        <div className="pointer-events-none mb-3 flex h-4 items-center gap-3 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+        <div className="pointer-events-none mb-3 flex h-4 items-center gap-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <span className="text-technical shrink-0">L {w} cm</span>
           <div className="dimension-line flex-1" />
         </div>
 
         <div className="relative">
-          {/* wrapper protection */}
-          <ProtectedImage
-            wrapperClassName="aspect-[4/5] border border-border"
-            src={artwork.preview_url}
-            alt={artwork.title}
-            loading="lazy"
-            width={800}
-            height={1000}
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-          />
+          {/* Card container: leve elevação de papel */}
+          <div className="relative overflow-hidden border border-border bg-background shadow-sm transition-all duration-500 ease-out will-change-transform group-hover:-translate-y-1 group-hover:shadow-md">
+            <ProtectedImage
+              wrapperClassName="aspect-[4/5] border-0"
+              src={artwork.preview_url}
+              alt={artwork.title}
+              loading="lazy"
+              width={800}
+              height={1000}
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            />
 
-
-          {/* Cota vertical (altura) — lado direito */}
-          <div className="pointer-events-none absolute -right-6 top-0 hidden h-full flex-col items-center opacity-0 transition-opacity duration-200 group-hover:opacity-100 md:flex">
-            <span className="text-technical mb-2">A</span>
-            <div className="dimension-line w-px flex-1" style={{ height: "100%", width: 1 }} />
-            <span className="text-technical mt-2">{h}</span>
+            {/* Cota vertical (altura) — lado direito */}
+            <div className="pointer-events-none absolute -right-6 top-0 hidden h-full flex-col items-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:flex">
+              <span className="text-technical mb-2">A</span>
+              <div className="dimension-line w-px flex-1" style={{ height: "100%", width: 1 }} />
+              <span className="text-technical mt-2">{h}</span>
+            </div>
           </div>
         </div>
 
