@@ -11,8 +11,8 @@ export const Route = createFileRoute("/checkout/pendente")({
         <h1 className="mt-4 font-serif text-4xl text-foreground">Pagamento em análise</h1>
         <p className="mt-6 text-foreground/80">
           Seu pagamento ainda está sendo processado pelo Mercado Pago. Assim que
-          for aprovado enviaremos o link de download por e-mail — geralmente em
-          poucos minutos para Pix e até algumas horas para cartão.
+          for aprovado, enviaremos o link de download por e-mail — geralmente em
+          poucos minutos no Pix e em algumas horas no cartão.
         </p>
         <Link to="/" className="mt-8 inline-block border border-foreground px-5 py-2 text-technical hover:bg-foreground hover:text-background">
           Voltar à galeria

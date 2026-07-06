@@ -20,7 +20,7 @@ function NotFoundComponent() {
         <p className="text-technical">404 · Página não encontrada</p>
         <h1 className="mt-4 font-serif text-4xl text-foreground">Fora do desenho</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          Essa página não existe ou foi movida.
+          Esta página não existe ou foi movida.
         </p>
         <Link
           to="/"
