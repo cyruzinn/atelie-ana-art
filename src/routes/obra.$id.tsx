@@ -64,7 +64,7 @@ function NotFound() {
       <Header />
       <div className="mx-auto max-w-3xl px-6 py-24 text-center">
         <p className="text-technical">Obra não encontrada</p>
-        <h1 className="mt-4 font-serif text-4xl">Essa obra não está mais disponível</h1>
+        <h1 className="mt-4 font-serif text-4xl">Esta obra não está mais disponível</h1>
         <Link to="/" className="mt-8 inline-block border border-foreground px-4 py-2 text-technical hover:bg-foreground hover:text-background">
           Ver galeria
         </Link>

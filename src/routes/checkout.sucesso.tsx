@@ -15,7 +15,7 @@ export const Route = createFileRoute("/checkout/sucesso")({
           resolução — o link é válido por 1 hora e permite até 3 downloads.
         </p>
         <p className="mt-4 text-technical">
-          Se não chegar em 5 minutos, verifique a caixa de spam.
+          Se o e-mail não chegar em 5 minutos, verifique a caixa de spam.
         </p>
         <Link to="/" className="mt-8 inline-block border border-foreground px-5 py-2 text-technical hover:bg-foreground hover:text-background">
           Voltar à galeria

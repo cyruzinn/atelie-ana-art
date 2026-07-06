@@ -62,7 +62,7 @@ function Home() {
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-foreground/80">
             Ana é arquiteta e artista. No ateliê, o rigor do desenho técnico
-            encontra a liberdade da aquarela — cada obra é única, assinada, e
+            encontra a liberdade da aquarela — cada obra é única, assinada e
             entregue com certificado de autoria. Aqui você encontra a coleção
             atual, disponível para compra e download em alta resolução.
           </p>
@@ -111,7 +111,7 @@ function Home() {
           <div className="mb-8 flex items-baseline justify-between border-b border-border pb-3">
             <h2 className="font-serif text-2xl text-foreground">Coleção atual</h2>
             <span className="text-technical">
-              {String(artworks.length).padStart(2, "0")} obras · atualizado hoje
+              {String(artworks.length).padStart(2, "0")} obras · atualizada hoje
             </span>
           </div>
 

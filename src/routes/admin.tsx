@@ -17,7 +17,7 @@ import { generateWatermarkedPreview } from "@/lib/watermark";
 
 
 export const Route = createFileRoute("/admin")({
-  head: () => ({ meta: [{ title: "Ateliê · Admin" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "Ateliê da Ana · Admin" }, { name: "robots", content: "noindex" }] }),
   component: AdminPage,
 });
 
@@ -113,7 +113,7 @@ function SignIn() {
   return (
     <div className="mx-auto max-w-md">
       <p className="text-technical">Acesso restrito</p>
-      <h1 className="mt-3 font-serif text-3xl">Ateliê da Ana · admin</h1>
+      <h1 className="mt-3 font-serif text-3xl">Ateliê da Ana · Admin</h1>
       <form onSubmit={onSubmit} className="mt-8 space-y-4 border border-border p-6">
         <label className="block">
           <span className="text-technical">E-mail</span>
@@ -137,11 +137,11 @@ function SignIn() {
           onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
           className="w-full text-technical hover:text-primary"
         >
-          {mode === "signin" ? "Primeira vez? criar conta" : "Já tem conta? entrar"}
+          {mode === "signin" ? "Primeira vez? Criar conta" : "Já tem conta? Entrar"}
         </button>
       </form>
       <p className="mt-4 text-technical text-center">
-        A primeira conta criada pode se promover a administradora do ateliê.
+        A primeira conta criada pode ser promovida a administradora do ateliê.
       </p>
     </div>
   );
@@ -179,7 +179,7 @@ function AdminPanel({ email }: { email: string }) {
   async function onClaim() {
     try {
       await claim();
-      toast.success("Você agora é administrador.");
+      toast.success("Você agora é administrador(a).");
       setIsAdmin(true);
       await refresh();
     } catch (e) {
@@ -230,11 +230,11 @@ function AdminPanel({ email }: { email: string }) {
   if (!isAdmin) {
     return (
       <div className="mx-auto max-w-md text-center">
-        <p className="text-technical">Logado como {email}</p>
+        <p className="text-technical">Conectado como {email}</p>
         <h1 className="mt-3 font-serif text-3xl">Sem permissão</h1>
         <p className="mt-4 text-foreground/80">
           Esta conta ainda não é administradora. Se você é a primeira pessoa a
-          entrar no ateliê, clique abaixo para se promover.
+          acessar o ateliê, clique abaixo para se promover.
         </p>
         <div className="mt-6 flex justify-center gap-3">
           <button onClick={onClaim} className="bg-primary px-4 py-2 text-primary-foreground hover:opacity-90">
@@ -357,7 +357,7 @@ function AdminPanel({ email }: { email: string }) {
       </div>
 
       <div className="mt-10 border border-dashed border-border p-5">
-        <p className="text-technical">Configuração de pagamentos</p>
+        <p className="text-technical">Configurações de pagamento</p>
         <p className="mt-2 text-sm text-foreground/80">
           Para ativar o Mercado Pago, adicione os segredos abaixo em{" "}
           <strong>Project Settings → Secrets</strong>:
