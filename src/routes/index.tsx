@@ -72,6 +72,41 @@ function Home() {
           </div>
         </section>
 
+        {/* About Ana */}
+        <section className="mx-auto max-w-6xl px-6 pb-12">
+          <div className="grid grid-cols-1 items-start gap-10 border-b border-border pb-12 md:grid-cols-2 md:items-center">
+            <div className="order-2 md:order-1">
+              <p className="text-technical">Sobre a artista</p>
+              <h2 className="mt-3 font-serif text-3xl text-foreground md:text-4xl">
+                Sobre a Ana
+              </h2>
+              <p className="mt-5 leading-relaxed text-foreground/80">
+                Ana é arquiteta e artista. Seu trabalho nasce da observação do
+                espaço construído — linhas, plantas, cortes — e se transforma em
+                peças que misturam o rigor técnico do desenho arquitetônico com a
+                liberdade da pintura. Cada obra é única e vendida em edição limitada.
+              </p>
+              <div className="mt-6 flex items-center gap-4 text-technical">
+                <span className="inline-block h-px w-12 bg-technical" />
+                <span>Arquitetura · Aquarela · Traço</span>
+              </div>
+            </div>
+
+            <div className="order-1 md:order-2">
+              <div className="relative aspect-[4/5] w-full border border-dashed border-border bg-muted/30">
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
+                  <div className="h-px w-16 bg-primary" />
+                  <p className="text-technical">Foto da Ana</p>
+                  <p className="max-w-[16rem] text-sm text-muted-foreground">
+                    Espaço reservado para uma foto do ateliê ou da artista.
+                  </p>
+                  <div className="h-px w-16 bg-primary" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="mx-auto max-w-6xl px-6 pb-24">
           <div className="mb-8 flex items-baseline justify-between border-b border-border pb-3">
             <h2 className="font-serif text-2xl text-foreground">Coleção atual</h2>
